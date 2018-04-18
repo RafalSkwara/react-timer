@@ -11,7 +11,8 @@ class Setup extends React.Component {// eslint-disable-line react/prefer-statele
             minutes: 1,
             seconds: 10,
          };
-         this.changeNumber = this.changeNumber.bind(this);
+        this.changeNumber = this.changeNumber.bind(this);
+        this.clickHandlerButton = this.clickHandlerButton.bind(this);
     }
 
     componentWillMount() {
@@ -22,45 +23,41 @@ class Setup extends React.Component {// eslint-disable-line react/prefer-statele
     }
 
     changeNumber(e) {
+        clearInterval(this.timer);
         let num;
         num = Math.round(e.target.value * 59 / 100);
-        num = num < 10 ? "0" + num : num;
-        if (e.target.name === "minutes") {         
+        num = num < 10 ? `0${num}` : num;
+        if (e.target.name === 'minutes') {
             this.setState({
                 minutes: num
             });
-        } else if (e.target.name === "seconds"){
+        } else if (e.target.name === 'seconds') {
             this.setState({
                 seconds: num
             });
         } else {
             this.setState({
-                minutes: 1,
+                minutes: 0,
                 seconds: 1
             });
         }
     }
 
     clickHandlerButton() {
-        this.timer = setInterval( 
-            () => {
-                let seconds = this.state.seconds;
-                this.setState({
-                    seconds: seconds-1
-                });
-            },
-        1000
-        );
+        this.timer = setInterval(() => this.tick(), 1000);
+    }
+
+    tick() {
+        this.setState({ seconds: this.state.seconds - 1 });
     }
 
     render() {
         return (
             <div className={"setup"}>  
-                <p>{this.state.minutes}:{this.state.seconds}</p>
+                <p className="timer">{this.state.minutes}:{this.state.seconds}</p>
                 <input onChange={this.changeNumber} type={"range"} name={"minutes"} />
                 <input onChange={this.changeNumber} type={"range"} name={"seconds"} />
-                <Counter />
-                <Button onClick={this.clickHandlerButton}/>
+                <Button handler={this.clickHandlerButton}/>
             </div>
         );
     }

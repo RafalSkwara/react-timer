@@ -1,3 +1,8 @@
+Based on daftcode-react-starter project.
+
+Original Readme below:
+
+
 # ⚛ daftcode-react-starter
 
 React boilerplate for everyone 

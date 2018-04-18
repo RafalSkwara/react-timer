@@ -5,11 +5,12 @@ import './Button.sass';
 class Button extends React.Component {
     constructor(props) {
         super(props);
+        state: {};
     }
 
     render() {
         return (
-            <button>Text</button>
+            <button onClick={this.props.handler}>Text</button>
         )
     }
 }
