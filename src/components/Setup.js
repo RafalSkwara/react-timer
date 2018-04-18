@@ -10,6 +10,7 @@ class Setup extends React.Component {// eslint-disable-line react/prefer-statele
         this.state = { 
             minutes: 1,
             seconds: 10,
+            isTicking: false
          };
         this.changeNumber = this.changeNumber.bind(this);
         this.clickHandlerButton = this.clickHandlerButton.bind(this);
@@ -21,12 +22,16 @@ class Setup extends React.Component {// eslint-disable-line react/prefer-statele
             seconds: "01"
         })
     }
+    format(number) {
+        return number < 10 ? `0${number}` : number;
+    }
 
     changeNumber(e) {
         clearInterval(this.timer);
+        this.setState({isTicking: false});
         let num;
         num = Math.round(e.target.value * 59 / 100);
-        num = num < 10 ? `0${num}` : num;
+        num = this.format(num);
         if (e.target.name === 'minutes') {
             this.setState({
                 minutes: num
@@ -43,12 +48,28 @@ class Setup extends React.Component {// eslint-disable-line react/prefer-statele
         }
     }
 
+
     clickHandlerButton() {
-        this.timer = setInterval(() => this.tick(), 1000);
+        if(!this.state.isTicking){
+            this.timer = setInterval(() => this.tick(), 1000);
+            this.setState({ isTicking: true });
+        } else {
+            clearInterval(this.timer);
+            this.setState({ isTicking: false });
+        }
     }
+        
 
     tick() {
-        this.setState({ seconds: this.state.seconds - 1 });
+        if (Number(this.state.seconds) >= 1) {
+            this.setState({ seconds: this.format(this.state.seconds - 1) });
+        } else if ((Number(this.state.seconds) === 0)) {
+            this.setState({ 
+                seconds: this.format(59),
+                minutes: this.format(this.state.minutes - 1)
+             });
+        }
+       
     }
 
     render() {
