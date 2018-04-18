@@ -76,8 +76,8 @@ class Setup extends React.Component {// eslint-disable-line react/prefer-statele
         return (
             <div className={"setup"}>  
                 <p className="timer">{this.state.minutes}:{this.state.seconds}</p>
-                <input onChange={this.changeNumber} type={"range"} name={"minutes"} />
-                <input onChange={this.changeNumber} type={"range"} name={"seconds"} />
+                <input onChange={this.changeNumber} type={"range"} name={"minutes"} value={this.state.minutes*100/59} />
+                <input onChange={this.changeNumber} type={"range"} name={"seconds"} value={this.state.seconds * 100 / 59}/>
                 <Button handler={this.clickHandlerButton}/>
             </div>
         );
