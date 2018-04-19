@@ -1,6 +1,78 @@
 @import "~styles/variables"  // '~' informs sass-loader that is not relative path
-
+*
+  box-sizing: border-box
+body
+  height: 100vh
+  width: 100vw
+  display: flex
+  align-items: center
+  justify-content: center
+  overflow: hidden
 .counter
   color: $header-font-color
   font-size: 3rem
   text-align: center
+
+.setup
+  display: flex
+  flex-direction: column
+  align-items: center
+  justify-content: center
+  width: 35vw
+  min-width: 400px
+  margin: 0 auto
+  background-color: #43A2BF
+  padding: 20px
+  border-radius: 100px
+  box-shadow: 0 0 5px 2px rgba(0,0,0,0.3)
+
+.top
+  display: flex
+  align-items: center
+  justify-content: space-around
+  max-width: 100%
+  min-width: 400px
+  height: 100px
+
+.timer
+  font-size: 40px
+  height: 250px
+  width: 250px
+  border-radius: 50%
+  background-color: #fff
+  display: flex
+  justify-content: center
+  align-items: center
+  margin: 0
+.timer-to
+  font-size: 36px
+// input[type="range"]
+//   width: 100px
+//   height: 20px
+//   transform-origin: 50px 50px
+//   transform: rotate(90deg)
+input[type=range]
+  -webkit-appearance: none
+  width: 150px
+  background: transparent
+input[type=range]:focus
+  outline: none
+
+input[type=range]::-webkit-slider-thumb
+  -webkit-appearance: none
+  border: 1px solid #000000
+  height: 30px
+  width: 30px
+  border-radius: 50%
+  background: #ffffff
+  cursor: pointer
+  margin-top: -10px
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d
+input[type=range]::-webkit-slider-runnable-track
+  width: 100%
+  height: 8.4px
+  cursor: pointer
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d
+  background: #51C2E5
+  border-radius: 1.3px
+  border: 0.2px solid #010101

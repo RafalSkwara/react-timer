@@ -5,14 +5,14 @@ import './Button.sass';
 class Button extends React.Component {
     constructor(props) {
         super(props);
-        state: {};
     }
 
     render() {
         return (
-            <button onClick={this.props.handler}>Text</button>
+            <button onClick={this.props.handler}>{this.props.text}</button>
         )
     }
 }
+
 
 export default Button;
