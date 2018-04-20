@@ -16,14 +16,15 @@ class Counter extends React.Component {// eslint-disable-line react/prefer-state
         this.clickHandlerButton = this.clickHandlerButton.bind(this);
     }
     // lifecycle methods
-    // componentWillUpdate() {
-    //     if (Number(this.state.from) === Number(this.state.to)) {
-    //         this.setState({
-    //             buttonText: 'Finished',
-    //             buttonColor: 'white',
-    //         });
-    //     }
-    // }
+    componentWillUpdate() {
+        if (Number(this.state.from) === Number(this.state.to)+1) {
+        clearInterval(this.timer);
+        this.setState({
+            buttonText: 'Finished',
+            buttonColor: 'white',
+        });
+        }
+    }
     // other methods
     // 1. helper methods
 
@@ -41,6 +42,7 @@ class Counter extends React.Component {// eslint-disable-line react/prefer-state
     }
     // event handler for inputs' onChange
     changeNumber(e) {
+        console.log(this.state, Number(this.state.from) === Number(this.state.to))
         clearInterval(this.timer);
         this.setState({
             isTicking: false,
@@ -79,17 +81,9 @@ class Counter extends React.Component {// eslint-disable-line react/prefer-state
     }
 
     tick() {
-        if (Number(this.state.from) === Number(this.state.to)) {
-            clearInterval(this.timer);
-            this.setState({
-                buttonText: 'Finished',
-                buttonColor: 'white',
-            });
-        } else {
-            this.setState({
-                from: this.state.from - 1,
-            });
-        }
+        this.setState({
+            from: this.state.from - 1,
+        });
     }
 
     render() {
