@@ -9,7 +9,11 @@ class Button extends React.Component {
 
     render() {
         return (
-            <button onClick={this.props.handler}>{this.props.text}</button>
+            <button 
+                onClick={this.props.handler}
+                style={{backgroundColor: this.props.bg}}>
+                    {this.props.text}
+            </button>
         )
     }
 }
