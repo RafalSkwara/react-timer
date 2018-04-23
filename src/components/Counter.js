@@ -26,22 +26,27 @@ class Counter extends React.Component {// eslint-disable-line react/prefer-state
         }
     }
     // other methods
-    // 1. helper methods
-
+    onSuccess() {
+        this.setState({
+            isTicking: false,
+            bgColor: '#44af16',
+        });
+        clearInterval(this.timer);
+        document.querySelector('.counter').classList.add('unpressed');
+    }
+    // 2. helper methods
     // format to always have double digits
     format(number) {
         return number < 10 ? `0${number}` : number;
     }
-
-
+    // ticking interval
     tick() {
         this.setState({
             from: this.state.from - 1,
-            percent: ((this.state.from-1) / this.props.countFrom) * 100,
+            percent: ((this.state.from - 1) / this.props.countFrom) * 100,
             bgColor: '#44af16',
-            
         });
-        if (this.state.from === this.state.to) { 
+        if (this.state.from === this.state.to) {
             this.onSuccess();
         }
     }
@@ -51,7 +56,9 @@ class Counter extends React.Component {// eslint-disable-line react/prefer-state
         this.btn.classList.contains('unpressed') ? this.btn.classList.remove('unpressed') : this.btn.classList.add('unpressed');
         if (this.state.from === this.state.to) {
             this.state.from = this.props.countFrom;
-
+        }
+        if (this.state.percent === 0) {
+            this.setState({percent: 100});
         }
         if (this.state.isTicking) {
             clearInterval(this.timer);
@@ -69,18 +76,7 @@ class Counter extends React.Component {// eslint-disable-line react/prefer-state
             });
         }
     }
-
-    onSuccess() {
-        this.setState({
-            isTicking: false,
-            bgColor: 'rgba(235,235,235,1)',
-        });
-        clearInterval(this.timer);
-        document.querySelector('.counter').classList.add('unpressed');
-
-    }
-
-
+    
     render() {
         return (
             <div className={'counter-wrapper'} >
