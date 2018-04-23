@@ -44,7 +44,6 @@ class Counter extends React.Component {// eslint-disable-line react/prefer-state
     }
 
     clickHandler() {
-        console.log(this.state.isTicking);
         if (this.state.from === this.state.to) {
             this.state.from = this.props.countFrom;
         }
@@ -76,9 +75,18 @@ class Counter extends React.Component {// eslint-disable-line react/prefer-state
 
     render() {
         return (
-            <div className={"counter"} style={{backgroundColor: this.state.bgColor}} onClick={this.clickHandler}>
-                <p className="timer-to">{this.format(Math.floor(this.state.to / 60))}:{this.format(this.state.to % 60)}</p>
-                <p className = "timer" > {this.format(Math.floor(this.state.from / 60))}:{this.format(this.state.from % 60)}</p>
+            <div className={'counter-wrapper'}>
+            <div 
+                className={"counter"} 
+                style={{backgroundColor: this.state.bgColor}} 
+                onClick={this.clickHandler}>
+                <p className="timer-to">
+                    {this.format(Math.floor(this.state.to / 60))}:
+                    {this.format(this.state.to % 60)}</p>
+                <p className = "timer" > 
+                {this.format(Math.floor(this.state.from / 60))}:
+                {this.format(this.state.from % 60)}</p>
+            </div>
             </div>
         );
     }
