@@ -8,7 +8,7 @@ import './styles/theme.sass';
 class App extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
-        <Counter countFrom={10} countTo={0} />
+        <Counter countFrom={20} countTo={0} />
     );
   }
 }

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import PropTypes from 'prop-types';
 
 import './Counter.sass';
 
@@ -9,7 +10,7 @@ class Counter extends React.Component {// eslint-disable-line react/prefer-state
             to: this.props.countTo,
             from: this.props.countFrom,
             isTicking: true,        // flag to see if timer is ticking
-            bgColor: 'green',
+            bgColor: '#44af16',
         }; // end state
         this.timer = null;
 
@@ -19,7 +20,7 @@ class Counter extends React.Component {// eslint-disable-line react/prefer-state
     componentDidMount() {
         if (this.state.isTicking) {
             console.log(this.state.isTicking);
-            this.timer = setInterval( () => {
+            this.timer = setInterval(() => {
                 this.tick();
             }, 1000);
         }
@@ -51,7 +52,7 @@ class Counter extends React.Component {// eslint-disable-line react/prefer-state
             clearInterval(this.timer);
             this.setState({
                 isTicking: false,
-                bgColor: 'red',
+                bgColor: '#e50d0d',
             });
         } else {
             this.timer = setInterval(() => {
@@ -59,7 +60,7 @@ class Counter extends React.Component {// eslint-disable-line react/prefer-state
             }, 1000);
             this.setState({
                 isTicking: true,
-                bgColor: 'green'
+                bgColor: '#44af16',
             });
         }
     }
@@ -83,4 +84,13 @@ class Counter extends React.Component {// eslint-disable-line react/prefer-state
     }
 }
 
+Counter.defaultProps = {
+    countFrom: 10,
+    countTo: 0,
+};
+
+Counter.propTypes = {
+    countFrom: PropTypes.number,
+    countTo: PropTypes.number,
+};
 export default Counter;
