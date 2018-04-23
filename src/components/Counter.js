@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Button from './Button';
 
 import './Counter.sass';
 
@@ -7,22 +6,22 @@ class Counter extends React.Component {// eslint-disable-line react/prefer-state
     constructor(props) {
         super(props);
         this.state = {
-            to: 0, // in seconds
-            from: 0,
-            isTicking: false,        // flag to see if timer is ticking
-            buttonText: 'Start',     // to be passed as prop to Button
+            to: this.props.countTo,
+            from: this.props.countFrom,
+            isTicking: true,        // flag to see if timer is ticking
+            bgColor: 'green',
         }; // end state
-        this.changeNumber = this.changeNumber.bind(this);
-        this.clickHandlerButton = this.clickHandlerButton.bind(this);
+        this.timer = null;
+
+        this.clickHandler = this.clickHandler.bind(this);
     }
     // lifecycle methods
-    componentWillUpdate() {
-        if (Number(this.state.from) === Number(this.state.to)+1) {
-        clearInterval(this.timer);
-        this.setState({
-            buttonText: 'Finished',
-            buttonColor: 'white',
-        });
+    componentDidMount() {
+        if (this.state.isTicking) {
+            console.log(this.state.isTicking);
+            this.timer = setInterval( () => {
+                this.tick();
+            }, 1000);
         }
     }
     // other methods
@@ -33,76 +32,52 @@ class Counter extends React.Component {// eslint-disable-line react/prefer-state
         return number < 10 ? `0${number}` : number;
     }
 
-    // convert seconds to minutes and seconds
-    secToMin(seconds) {
-        return {
-            sec: this.format(seconds % 60),
-            min: this.format((seconds - (seconds % 60)) / 60),
-        };
-    }
-    // event handler for inputs' onChange
-    changeNumber(e) {
-        console.log(this.state, Number(this.state.from) === Number(this.state.to))
-        clearInterval(this.timer);
-        this.setState({
-            isTicking: false,
-            buttonText: 'Start',
-            buttonColor: 'green',
-        });
-        let num;
-        num = e.target.value;
-        if (e.target.name === 'from') {
-            this.setState({
-                from: num,
-            });
-        } else if (e.target.name === 'to') {
-            this.setState({
-                to: num,
-            });
-        }
-    }
-
-    clickHandlerButton() {
-        if (!this.state.isTicking && +this.state.from > +this.state.to) {
-            this.timer = setInterval(() => this.tick(), 1000);
-            this.setState({
-                isTicking: true,
-                buttonText: 'Stop',
-                buttonColor: "red",
-            });
-        } else {
-            clearInterval(this.timer);
-            this.setState({
-                isTicking: false,
-                buttonText: 'Start',
-                buttonColor: "green",
-            });
-        }
-    }
 
     tick() {
         this.setState({
             from: this.state.from - 1,
         });
+        if (this.state.from === this.state.to) {
+            this.onSuccess();
+        }
+    }
+
+    clickHandler() {
+        console.log(this.state.isTicking);
+        if (this.state.from === this.state.to) {
+            this.state.from = this.props.countFrom;
+        }
+        if (this.state.isTicking) {
+            clearInterval(this.timer);
+            this.setState({
+                isTicking: false,
+                bgColor: 'red',
+            });
+        } else {
+            this.timer = setInterval(() => {
+                this.tick();
+            }, 1000);
+            this.setState({
+                isTicking: true,
+                bgColor: 'green'
+            });
+        }
+    }
+
+    onSuccess() {
+        this.setState({
+            isTicking: false,
+            bgColor: '#fff316',
+        });
+        clearInterval(this.timer);
+
     }
 
     render() {
         return (
-            <div className={"counter"}>
-                <p className="timer-to">{this.secToMin(this.state.to).min}:{this.secToMin(this.state.to).sec}</p>
-                <p className="timer">{this.secToMin(this.state.from).min}:{this.secToMin(this.state.from).sec}</p>
-                <div className={"top"}>
-                    < div className = {"column"} >
-                        <span>to: </span><input onChange={this.changeNumber} type={"number"} name={"to"}  />
-                    </div>
-                    < div className = {"column"} >
-                        <span>from: </span><input onChange={this.changeNumber} type={"number"} name={"from"} />
-                    </div>
-                </div>
-                    <Button 
-                        handler={this.clickHandlerButton} 
-                        text={this.state.buttonText}
-                        bg={this.state.buttonColor}/>
+            <div className={"counter"} style={{backgroundColor: this.state.bgColor}} onClick={this.clickHandler}>
+                <p className="timer-to">{this.format(Math.floor(this.state.to / 60))}:{this.format(this.state.to % 60)}</p>
+                <p className = "timer" > {this.format(Math.floor(this.state.from / 60))}:{this.format(this.state.from % 60)}</p>
             </div>
         );
     }
