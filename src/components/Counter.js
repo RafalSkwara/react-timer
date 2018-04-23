@@ -20,7 +20,6 @@ class Counter extends React.Component {// eslint-disable-line react/prefer-state
     // lifecycle methods
     componentDidMount() {
         if (this.state.isTicking) {
-            console.log(this.state.isTicking);
             this.timer = setInterval(() => {
                 this.tick();
             }, 1000);
@@ -39,10 +38,9 @@ class Counter extends React.Component {// eslint-disable-line react/prefer-state
         this.setState({
             from: this.state.from - 1,
             percent: ((this.state.from-1) / this.props.countFrom) * 100,
+            bgColor: '#44af16',
             
         });
-       
-        console.log(this.state.percent);
         if (this.state.from === this.state.to) { 
             this.onSuccess();
         }
@@ -75,7 +73,7 @@ class Counter extends React.Component {// eslint-disable-line react/prefer-state
     onSuccess() {
         this.setState({
             isTicking: false,
-            bgColor: '#fff316',
+            bgColor: 'rgba(235,235,235,1)',
         });
         clearInterval(this.timer);
         document.querySelector('.counter').classList.add('unpressed');
